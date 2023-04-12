@@ -23,7 +23,7 @@ const Login = ({ login }) => {
     // Redirect them to the home page
 
     return (
-        <div className='container mt-5'>
+        <div className='container mt-5 container-sm'>
             <h1>Sign In</h1>
             <p>Sign into your Account</p>
             <form onSubmit={e => onSubmit(e)}>
