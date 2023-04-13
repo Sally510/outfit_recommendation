@@ -29,7 +29,7 @@ const ResetPassword = ({ reset_password }) => {
         <div className='container mt-5 container-sm'>
             <h1>确认修改密码？</h1>
             <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
+            <div class="my-3">
                     <input
                         className='form-control'
                         type='email'
@@ -40,7 +40,9 @@ const ResetPassword = ({ reset_password }) => {
                         required
                     />
                 </div>
-                <button className='btn btn-primary' type='submit'>提交申请</button>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark" type="submit">提 交 申 请</button>
+                </div>
             </form>
 
         </div>

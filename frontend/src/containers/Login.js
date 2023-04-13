@@ -24,11 +24,11 @@ const Login = ({ login, isAuthenticated }) => {
     }
 
     return (
-        <div className='container mt-5 container-sm'>
-            <h1>Sign In</h1>
-            <p>Sign into your Account</p>
+        <div className='container mx-auto' style={{ width: '500px', marginTop: '100px' }}>
+
             <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
                     <input
                         className='form-control'
                         type='email'
@@ -39,26 +39,44 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <div className='form-group'>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
                     <input
-                        className='form-control'
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
+                            className='form-control'
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            value={password}
+                            onChange={e => onChange(e)}
+                            minLength='6'
+                            required
                     />
                 </div>
-                <button className='btn btn-primary' type='submit'>Login</button>
+
+                <div class="row mb-4">
+                    <div class="col d-flex justify-content-between">
+                        <div class="form-check">
+                            <input class="form-check-input bg-dark" type="checkbox" value="" id="form2Example31" checked />
+                            <label class="form-check-label" for="form2Example31"> 记住我 </label>
+                        </div>
+                    </div>        
+                    <div class="col">
+                        <Link className='link-secondary' to='/reset-password'>忘记密码？</Link>
+                    </div>
+                </div>
+            
+                <div class="d-grid gap-2">
+                <button className='btn btn-dark' type='submit'>登 录</button>
+                </div>
+
+                <div class="text-center mt-3">
+                    <p>Don't have an account?    <Link className='link-secondary' to='/register'>注 册</Link></p>
+                </div>
+
             </form>
-            <p className='mt-3'>
-                Don't have an account? <Link to='/register'>Sign Up</Link>
-            </p>
-            <p className='mt-3'>
-                Forgot your Password? <Link to='/reset-password'>Reset Password</Link>
-            </p>
+
+
         </div>
     );
 

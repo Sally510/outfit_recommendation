@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reset_password_confirm } from '../actions/auth';
 
-const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
+const ResetPasswordConfirm = ({ reset_password_confirm }) => {
     const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
         new_password: '',
@@ -29,13 +29,14 @@ const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
     }
 
     return (
-        <div className='container mt-5'>
+        <div className='container mx-auto' style={{ width: '500px', marginTop: '100px' }}>
             <form onSubmit={e => onSubmit(e)}>
-            <div className='form-group'>
+                <div class="mb-3">
+                    <label for="password" class="form-label">新密码</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='New Password'
+                        placeholder='请输入新密码'
                         name='new_password'
                         value={new_password}
                         onChange={e => onChange(e)}
@@ -43,11 +44,12 @@ const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
                         required
                     />
                 </div>
-                <div className='form-group'>
+                <div class="mb-3">
+                    <label for="password" class="form-label">确认新密码</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='Confirm New Password'
+                        placeholder='请再次输入您的密码'
                         name='re_new_password'
                         value={re_new_password}
                         onChange={e => onChange(e)}
@@ -55,9 +57,11 @@ const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
                         required
                     />
                 </div>
-                <button className='btn btn-primary' type='submit'>Reset Password</button>
-            </form>
-        </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark" type="submit">重 置 密 码</button>
+                </div>
+             </form>
+        </div>           
     );
 };
 

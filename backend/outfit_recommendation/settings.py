@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    # 'frontend',
     'djoser',
     'accounts.apps.AccountsConfig',
     # 'recommendation.apps.RecommendationConfig',
