@@ -6,13 +6,13 @@ import { logout } from "../actions/auth";
 const Navbar = ({ logout, isAuthenticated }) => {
   const guestLinks = () => (
     <Fragment>
-      <Link to='/login' role="button" className="btn btn-outline-light me-2">登录</Link>
-      <Link to='/register' role="button" className="btn btn-warning">注册</Link>
+      <Link to='/login' role="button" className="btn btn-outline-light me-2">Login</Link>
+      <Link to='/register' role="button" className="btn btn-warning">Sign up</Link>
     </Fragment>
   );
 
   const authLinks = () => (
-    <a href='#!' onClick={logout} className="btn btn-warning">注销</a>
+    <a href='#!' onClick={logout} className="btn btn-warning">Logout</a>
 
   );
 

@@ -128,7 +128,8 @@ export const register = (name, email, password, re_password) => async dispatch =
 
     } catch (err) {
         dispatch({
-            type: SIGNUP_FAIL
+            type: SIGNUP_FAIL,
+            payload: err.response.data
         })       
     };
 };

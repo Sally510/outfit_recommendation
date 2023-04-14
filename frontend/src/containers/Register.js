@@ -37,11 +37,11 @@ const Register = ({ register, isAuthenticated }) => {
 
             <form onSubmit={e => onSubmit(e)}>
                 <div class="mb-3">
-                    <label for="name" class="form-label">用户名</label>
+                    <label for="name" class="form-label">Name</label>
                     <input
                         className='form-control'
                         type='text'
-                        placeholder='请输入用户名'
+                        placeholder='Name'
                         name='name'
                         value={name}
                         onChange={e => onChange(e)}
@@ -49,11 +49,11 @@ const Register = ({ register, isAuthenticated }) => {
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">电子邮箱</label>
+                    <label for="email" class="form-label">Email</label>
                     <input
                         className='form-control'
                         type='email'
-                        placeholder='请输入电子邮箱'
+                        placeholder='Email'
                         name='email'
                         value={email}
                         onChange={e => onChange(e)}
@@ -62,11 +62,11 @@ const Register = ({ register, isAuthenticated }) => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">密码</label>
+                    <label for="password" class="form-label">Password</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='请输入密码'
+                        placeholder='Password'
                         name='password'
                         value={password}
                         onChange={e => onChange(e)}
@@ -75,11 +75,11 @@ const Register = ({ register, isAuthenticated }) => {
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">确认密码</label>
+                    <label for="password" class="form-label">Confirm Password</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='请再次输入您的密码'
+                        placeholder='Confirm your Password'
                         name='re_password'
                         value={re_password}
                         onChange={e => onChange(e)}
@@ -88,15 +88,8 @@ const Register = ({ register, isAuthenticated }) => {
                     />
                 </div>
 
-                <div class="form-check d-flex justify-content-center mb-4">
-                    <input class="form-check-input me-2 bg-dark" type="checkbox" value="" id="registerCheck" checked
-                        aria-describedby="registerCheckHelpText" />
-                    <label class="form-check-label" for="registerCheck">
-                        我同意以上条款
-                    </label>
-                </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-dark" type="submit">注 册</button>
+                    <button class="btn btn-dark" type="submit">Sign up</button>
                 </div>
 
 

@@ -1,23 +1,40 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { login } from '../actions/auth';
 
 const Login = ({ login, isAuthenticated }) => {
+
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        rememberMe: false
     });
 
-    const { email, password } = formData;
+    const { email, password, rememberMe } = formData;
+
+    useEffect(() => {
+        const storedEmail = localStorage.getItem('email');
+        const storedPassword = localStorage.getItem('password');
+        if (storedEmail && storedPassword) {
+          setFormData({ email: storedEmail, password: storedPassword, rememberMe: true });
+        }
+      }, []);
 
     const onChange = e => setFormData ({...formData, [e.target.name]: e.target.value });
 
     const onSubmit = e => {
         e.preventDefault();
-        
-        login (email, password)
+        if (rememberMe) {
+          localStorage.setItem('email', email);
+          localStorage.setItem('password', password);
+        } else {
+          localStorage.removeItem('email');
+          localStorage.removeItem('password');
+        }
+        login(email, password);
     };
+    
 
     if (isAuthenticated) {
         return <Navigate to="/" />
@@ -53,25 +70,25 @@ const Login = ({ login, isAuthenticated }) => {
                             required
                     />
                 </div>
-
+                
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-between">
                         <div class="form-check">
-                            <input class="form-check-input bg-dark" type="checkbox" value="" id="form2Example31" checked />
-                            <label class="form-check-label" for="form2Example31"> 记住我 </label>
+                            <input class="form-check-input" type="checkbox" name="rememberMe" onChange={e => onChange(e)} checked={rememberMe} />
+                            <label class="form-check-label" for="rememberMe"> Remember Me </label>
                         </div>
                     </div>        
                     <div class="col">
-                        <Link className='link-secondary' to='/reset-password'>忘记密码？</Link>
+                        <Link className='link-secondary' to='/reset-password'>Forgot Password?</Link>
                     </div>
                 </div>
             
                 <div class="d-grid gap-2">
-                <button className='btn btn-dark' type='submit'>登 录</button>
+                <button className='btn btn-dark' type='submit'>Login</button>
                 </div>
 
                 <div class="text-center mt-3">
-                    <p>Don't have an account?    <Link className='link-secondary' to='/register'>注 册</Link></p>
+                    <p>Don't have an account?    <Link className='link-secondary' to='/register'>Register</Link></p>
                 </div>
 
             </form>

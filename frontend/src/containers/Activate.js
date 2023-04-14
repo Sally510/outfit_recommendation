@@ -22,9 +22,9 @@ const Activate = ({ verify }) => {
 
     return (
         <div className='container mx-auto' style={{ width: '500px', marginTop: '100px' }}>
-            <h1>认证你的账号:</h1>
+            <h1>Verify Your Account :</h1>
             <div class="d-grid gap-2 my-5">
-                <button onClick={verify_account} type='button' className='btn btn-dark'>认 证</button>
+                <button onClick={verify_account} type='button' className='btn btn-dark'>Verify</button>
             </div>
         </div>
     );

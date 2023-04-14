@@ -27,7 +27,7 @@ const ResetPassword = ({ reset_password }) => {
 
     return (
         <div className='container mt-5 container-sm'>
-            <h1>确认修改密码？</h1>
+            <h1>Reset Password？</h1>
             <form onSubmit={e => onSubmit(e)}>
             <div class="my-3">
                     <input
@@ -41,7 +41,7 @@ const ResetPassword = ({ reset_password }) => {
                     />
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-dark" type="submit">提 交 申 请</button>
+                    <button class="btn btn-dark" type="submit">Submit</button>
                 </div>
             </form>
 
