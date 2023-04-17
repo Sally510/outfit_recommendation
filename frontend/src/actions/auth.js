@@ -43,7 +43,8 @@ export const checkAuthenticated = () => async dispatch => {
             }
         } catch (err) {
             dispatch({
-                type: AUTHENTICATED_FAIL
+                type: AUTHENTICATED_FAIL,
+                payload: err.response.data
             });
         }
 
@@ -72,13 +73,19 @@ export const load_user = () => async dispatch => {
                 payload: res.data
             });
         } catch (err) {
+            console.log(err.response.data);
             dispatch({
-                type: USER_LOADED_FAIL
+                type: USER_LOADED_FAIL,
+                payload: err.response.data
             });
         }
     } else {
+        console.log( " else USER_LOADED_FAIL");
         dispatch({
-            type: USER_LOADED_FAIL
+            
+            type: USER_LOADED_FAIL,
+            
+            
         });
     }
 };
@@ -102,9 +109,10 @@ export const login = (email, password) => async dispatch => {
 
         dispatch(load_user());
 
-    } catch (err) {
+    } catch (err) {       
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
+            payload: err.response.data
         })       
     };
 };
@@ -120,16 +128,17 @@ export const register = (name, email, password, re_password) => async dispatch =
 
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
-
+        console.log(" register SUCCESS", res);
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data
         })
 
     } catch (err) {
+        console.log(" register fail");
         dispatch({
             type: SIGNUP_FAIL,
-            payload: err.response.data
+            payload: err.response.data           
         })       
     };
 };

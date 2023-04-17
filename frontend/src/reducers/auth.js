@@ -20,7 +20,8 @@ const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
-    user: null
+    user: null,
+    error: null,
 };
 
 export default function Auth (state = initialState, action) {
@@ -28,12 +29,14 @@ export default function Auth (state = initialState, action) {
 
     switch(type) {
         case AUTHENTICATED_SUCCESS:
+            localStorage.removeItem('error');
             return{
                 ...state,
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access)
+            localStorage.removeItem('error');
             return {
                 ...state,
                 isAuthenticated: true,
@@ -41,9 +44,11 @@ export default function Auth (state = initialState, action) {
                 refresh: payload.refresh
             }
         case SIGNUP_SUCCESS:
+            localStorage.removeItem('error');
             return {
                 ...state,
-                isAuthenticated: false
+                isAuthenticated: false,
+                error: null,
             }
         
         case USER_LOADED_SUCCESS:
@@ -51,29 +56,75 @@ export default function Auth (state = initialState, action) {
                 ...state,
                 user: payload
             }
-            case AUTHENTICATED_FAIL:
-                return{
-                    ...state,
-                    isAuthenticated: false
-                }
+        case AUTHENTICATED_FAIL:
+            console.log(payload);
+            return{
+                ...state,
+                isAuthenticated: false
+            }
         case USER_LOADED_FAIL:
+            console.log(payload);
             return {
                 ...state,
-                user: null
+                user: null,
             }
 
         case LOGIN_FAIL:
-        case SIGNUP_FAIL:
-        case LOGOUT:
             localStorage.removeItem('access');
-            localStorage.removeItem('refresh');
+            localStorage.removeItem('refresh'); 
+            console.log(payload);           
             return {
                 ...state,
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null
-
+                user: null,
+                error: payload.detail,
+            }
+        case SIGNUP_FAIL:
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh'); 
+            localStorage.removeItem('error');
+            const passwordErrors = payload.password;
+            const emailErrors = payload.email;
+            const nonFieldErrors = payload.non_field_errors;
+            const errors = [];
+            if (passwordErrors) {
+                errors.push(...passwordErrors); 
+            }
+            if (emailErrors) {
+                errors.push(...emailErrors);
+            }
+            if (nonFieldErrors) {
+                errors.push(...nonFieldErrors);
+            }
+            const errorString = errors.join('\n'); 
+            if (!errorString) {
+                return {
+                    ...state,
+                    access: null,
+                    refresh: null,
+                    isAuthenticated: false,
+                    user: null,
+                }
+            }
+            return {
+                ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null,
+                error: errorString,
+            }
+        case LOGOUT:
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');    
+            return {
+                ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null,
             }
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:

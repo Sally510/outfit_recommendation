@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { login } from '../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, error }) => {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -90,17 +90,17 @@ const Login = ({ login, isAuthenticated }) => {
                 <div class="text-center mt-3">
                     <p>Don't have an account?    <Link className='link-secondary' to='/register'>Register</Link></p>
                 </div>
+                {error && ( <div className="alert alert-danger mt-3" role="alert">{error}</div>)}
 
             </form>
-
-
         </div>
     );
 
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error 
 });
 
 export default connect(mapStateToProps, { login })(Login);

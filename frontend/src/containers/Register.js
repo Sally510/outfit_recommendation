@@ -3,34 +3,35 @@ import {  Navigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { register } from '../actions/auth';
 
-const Register = ({ register, isAuthenticated }) => {
+const Register = ({ register, isAuthenticated, error }) => {
     const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        re_password: ''
+        re_password: '',
     });
 
     const { name, email, password, re_password } = formData;
 
     const onChange = e => setFormData ({...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = e => {
+    const onSubmit = async  e => {      
         e.preventDefault();
         
-        if (password === re_password){
-            register (name, email, password, re_password);
-            setAccountCreated(true);
-        }
-    };
+        await register (name, email, password, re_password);
 
+
+        setAccountCreated(true);
+    };
+    console.log(accountCreated, error);
     if (isAuthenticated) {
         return <Navigate to="/" />
     }
-    if (accountCreated) {
+
+    if (accountCreated && !error) {
         return <Navigate to="/login" />
-    }
+    } 
 
     return (
         <div className='container mx-auto' style={{ width: '500px', marginTop: '50px' }}>
@@ -88,29 +89,20 @@ const Register = ({ register, isAuthenticated }) => {
                     />
                 </div>
 
-                <div class="d-grid gap-2">
+                <div class="d-grid gap-2 my-3">
                     <button class="btn btn-dark" type="submit">Sign up</button>
                 </div>
 
-
+                {error && ( <pre className="alert alert-danger mt-3" role="alert">{error}</pre>)}
             </form>
 
         </div>
-
-
-
-
-
-
-
-
-
     );
 
 };
-
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error 
 });
 
 export default connect(mapStateToProps, { register })(Register);
