@@ -27,13 +27,13 @@ const ResetPassword = ({ reset_password }) => {
 
     return (
         <div className='container mt-5 container-sm'>
-            <h1>Reset Password？</h1>
+            <h1>重置密码</h1>
             <form onSubmit={e => onSubmit(e)}>
             <div class="my-3">
                     <input
                         className='form-control'
                         type='email'
-                        placeholder='Email'
+                        placeholder='请输入您的电子邮箱'
                         name='email'
                         value={email}
                         onChange={e => onChange(e)}
@@ -41,7 +41,7 @@ const ResetPassword = ({ reset_password }) => {
                     />
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-dark" type="submit">Submit</button>
+                    <button class="btn btn-dark" type="submit">提交申请</button>
                 </div>
             </form>
 

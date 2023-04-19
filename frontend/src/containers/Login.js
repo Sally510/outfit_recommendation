@@ -51,11 +51,11 @@ const Login = ({ login, isAuthenticated, error }) => {
 
             <form onSubmit={e => onSubmit(e)}>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label">电子邮箱</label>
                     <input
                         className='form-control'
                         type='email'
-                        placeholder='Email'
+                        placeholder='电子邮箱'
                         name='email'
                         value={email}
                         onChange={e => onChange(e)}
@@ -64,11 +64,11 @@ const Login = ({ login, isAuthenticated, error }) => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">密码</label>
                     <input
                             className='form-control'
                             type='password'
-                            placeholder='Password'
+                            placeholder='密码'
                             name='password'
                             value={password}
                             onChange={e => onChange(e)}
@@ -81,20 +81,20 @@ const Login = ({ login, isAuthenticated, error }) => {
                     <div class="col d-flex justify-content-between">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="rememberMe" onChange={e => onChange(e)} checked={rememberMe} />
-                            <label class="form-check-label" for="rememberMe"> Remember Me </label>
+                            <label class="form-check-label" for="rememberMe"> 记住我 </label>
                         </div>
                     </div>        
                     <div class="col">
-                        <Link className='link-secondary' to='/reset-password'>Forgot Password?</Link>
+                        <Link className='link-secondary' to='/reset-password'>忘记密码?</Link>
                     </div>
                 </div>
             
                 <div class="d-grid gap-2">
-                <button className='btn btn-dark' type='submit'>Login</button>
+                <button className='btn btn-dark' type='submit'>登陆</button>
                 </div>
 
                 <div class="text-center mt-3">
-                    <p>Don't have an account?    <Link className='link-secondary' to='/register'>Register</Link></p>
+                    <p>没有账号?    <Link className='link-secondary' to='/register'>注册</Link></p>
                 </div>
                 {error && ( <div className="alert alert-danger mt-3" role="alert">{error}</div>)}
 

@@ -32,11 +32,11 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
         <div className='container mx-auto' style={{ width: '500px', marginTop: '100px' }}>
             <form onSubmit={e => onSubmit(e)}>
                 <div class="mb-3">
-                    <label for="password" class="form-label">New Password</label>
+                    <label for="password" class="form-label">新密码</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='New Password'
+                        placeholder='新密码'
                         name='new_password'
                         value={new_password}
                         onChange={e => onChange(e)}
@@ -45,11 +45,11 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Confirm New Password</label>
+                    <label for="password" class="form-label">确认您的新密码</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='Confirm New Password'
+                        placeholder='确认您的新密码'
                         name='re_new_password'
                         value={re_new_password}
                         onChange={e => onChange(e)}
@@ -58,7 +58,7 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
                     />
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-dark" type="submit">Reset Password</button>
+                    <button class="btn btn-dark" type="submit">重置密码</button>
                 </div>
              </form>
         </div>           
