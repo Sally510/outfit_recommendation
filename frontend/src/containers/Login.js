@@ -21,7 +21,13 @@ const Login = ({ login, isAuthenticated, error }) => {
         }
       }, []);
 
-    const onChange = e => setFormData ({...formData, [e.target.name]: e.target.value });
+      const onChange = e => {
+        if (e.target.name === 'rememberMe') {
+          setFormData({ ...formData, rememberMe: e.target.checked });
+        } else {
+          setFormData({ ...formData, [e.target.name]: e.target.value }); 
+        }
+      }
 
     const onSubmit = e => {
         e.preventDefault();

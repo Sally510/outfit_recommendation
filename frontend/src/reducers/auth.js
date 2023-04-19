@@ -57,13 +57,11 @@ export default function Auth (state = initialState, action) {
                 user: payload
             }
         case AUTHENTICATED_FAIL:
-            console.log(payload);
             return{
                 ...state,
                 isAuthenticated: false
             }
         case USER_LOADED_FAIL:
-            console.log(payload);
             return {
                 ...state,
                 user: null,
@@ -71,8 +69,7 @@ export default function Auth (state = initialState, action) {
 
         case LOGIN_FAIL:
             localStorage.removeItem('access');
-            localStorage.removeItem('refresh'); 
-            console.log(payload);           
+            localStorage.removeItem('refresh');            
             return {
                 ...state,
                 access: null,

@@ -7,11 +7,13 @@ import Register from './containers/Register'
 import Activate from './containers/Activate'
 import ResetPassword from './containers/ResetPassword'
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm'
+import Recommendation from "./containers/Recommendation";
 
 import { Provider } from "react-redux";
 import store from "./store";
 
 import Layout from "./hocs/Layout";
+
 
 const App = () => (
   <Provider store={store}>
@@ -24,6 +26,7 @@ const App = () => (
           <Route exact path='/reset-password' element={<ResetPassword/>} />
           <Route exact path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>} />
           <Route exact path='/activate/:uid/:token' element={<Activate/>} />
+          <Route exact path='/recommendation' element={<Recommendation/>} />
         </Routes>
       </Layout>
     </Router>
