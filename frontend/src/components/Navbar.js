@@ -11,11 +11,28 @@ const Navbar = ({ logout, isAuthenticated }) => {
     </Fragment>
   );
 
-  const authLinks = () => (
-    <a href='#!' onClick={logout} className="btn btn-warning">注销</a>
+  const authLogout = () => (
+    <Fragment>
+      <a href='#!' onClick={logout} className="btn btn-warning">注销</a>
+    </Fragment>
 
   );
 
+  const authLinks = () => {
+    if (isAuthenticated) {
+      console.log('Rendering auth links!')
+      return (
+        <Fragment>
+          <li>
+            <Link to='/recommendation' className='nav-link px-2 text-white'>开始推荐</Link>
+          </li>
+          <li>
+            <Link to='/history' className='nav-link px-2 text-white'>历史记录</Link>
+          </li>
+        </Fragment>
+      ) 
+    }
+  }
   return(
     <header className="p-3 text-bg-dark">
       <div className="container">
@@ -25,19 +42,13 @@ const Navbar = ({ logout, isAuthenticated }) => {
           </a>
 
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><Link to="/" className="nav-link px-2 text-secondary">Home</Link></li>
-            <li><a href="#" className="nav-link px-2 text-white">Features</a></li>
-            <li><a href="#" className="nav-link px-2 text-white">Pricing</a></li>
-            <li><a href="#" className="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" className="nav-link px-2 text-white">About</a></li>
+            <li><Link to="/" className="nav-link px-2 text-secondary">主页</Link></li>
+            {authLinks() } 
           </ul>
 
-          {/* <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" className="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" />
-          </form> */}
 
           <div className="text-end">
-            {isAuthenticated? authLinks(): guestLinks() }
+            {isAuthenticated? authLogout(): guestLinks() }
           </div>
         </div>
       </div>

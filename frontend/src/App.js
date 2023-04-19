@@ -8,6 +8,7 @@ import Activate from './containers/Activate'
 import ResetPassword from './containers/ResetPassword'
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm'
 import Recommendation from "./containers/Recommendation";
+import History from "./containers/History";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -27,6 +28,7 @@ const App = () => (
           <Route exact path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>} />
           <Route exact path='/activate/:uid/:token' element={<Activate/>} />
           <Route exact path='/recommendation' element={<Recommendation/>} />
+          <Route exact path='/history' element={<History/>} />
         </Routes>
       </Layout>
     </Router>
