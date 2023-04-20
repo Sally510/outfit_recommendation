@@ -8,10 +8,15 @@ class UserAccountManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, name = name)
-
         user.set_password(password)
         user.save()
-
+        return user
+    
+    def create_superuser(self, email, name, password):
+        user = self.create_user(email, name, password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
         return user
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -28,8 +33,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.name
 
-    def get_short_name(self):
-        return self.name
     
     def __str__(self):
         return self.email
