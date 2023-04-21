@@ -28,7 +28,7 @@ const App = () => (
           <Route exact path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>} />
           <Route exact path='/activate/:uid/:token' element={<Activate/>} />
           <Route exact path='/recommendation' element={<Recommendation/>} />
-          <Route exact path='/history' element={<History/>} />
+          {/* <Route exact path='/history' element={<History/>} /> */}
         </Routes>
       </Layout>
     </Router>
