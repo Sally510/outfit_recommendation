@@ -1,10 +1,13 @@
 from django.urls import path
 from .views import(
     ItemListView,
-    AddToWardrobeView
+    ItemView,
+    WardrobeView,
+    AddWardrobeView
     )
 
 urlpatterns = [
     path('recommendation/', ItemListView.as_view(), name='recommendation'),
-    path('add-to-wardrobe/', AddToWardrobeView.as_view(), name='add-to-wardrobe')
+    path('recommendation/<int:pk>/', ItemView.as_view(), name='recommendation'),
+    path('add-to-wardrobe/', AddWardrobeView.as_view(), name='add-to-wardrobe')
 ]

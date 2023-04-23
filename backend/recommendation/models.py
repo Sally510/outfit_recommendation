@@ -12,26 +12,12 @@ class Item(models.Model):
     baseColour = models.CharField(max_length=50)
     season = models.CharField(max_length=20)
     usage = models.CharField(max_length=20)
-    image = models.CharField(max_length=100)
-    slug = models.SlugField()
-
+    # image = models.ImageField(upload_to='images')
+    image = models.CharField(max_length=100, null=True)
     def __str__(self):
         return self.productDisplayName
 
-    def get_absolute_url(self):
-        return reverse("recommendation:recommendation", kwargs={
-            'slug': self.slug
-        })
 
-    def get_add_to_wardrobe_url(self):
-        return reverse("recommendation:add-to-wardrobe", kwargs={
-            'slug': self.slug
-        })
-
-    def get_remove_from_wardrobe_url(self):
-        return reverse("recommendation:remove-from-wardrobe", kwargs={
-            'slug': self.slug
-        })
     
 class OrderItem(models.Model):
     user = models.ForeignKey(UserAccount,

@@ -35,6 +35,10 @@ import axios from "axios";
         });
     }
 
+    handleViewItem = id => {
+      //pass the id to the item page
+    }
+
     render() {  
       const {data, error, loading} = this.state;
 
@@ -79,11 +83,14 @@ import axios from "axios";
                     <p className="card-text">{item.productDisplayName}</p>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
-                          <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
+                          <button type="button" 
+                                  className="btn btn-sm btn-outline-secondary"
+                                  onClick={()=>this.handleViewItem(item.id)}
+                                  >View Item</button>
                           <button type="button" 
                                   className="btn btn-sm btn-outline-secondary"
                                   onClick={()=>this.handleAddToWardrobe(item.slug)}
-                                  >加入衣橱
+                                  >Add to Wardrobe
                           </button>
                         </div>
                         <small className="text-body-secondary">{item.gender}</small>
