@@ -26,10 +26,10 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('recommendation/', include('recommendation.urls')),
     path('api/', include('recommendation.api.urls')),
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    # re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# urlpatterns += [
-#     re_path(r'^.*', TemplateView.as_view(template_name='index.html')) 
-# ]
+urlpatterns += [
+    re_path(r'^.*', TemplateView.as_view(template_name='index.html')) 
+]
 
