@@ -29,9 +29,11 @@ class OrderItem(models.Model):
         return self.user.name
     
 class CartItem(models.Model):
-    id = models.IntegerField(primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('item', 'user',)
     def __str__(self):
         return self.productDisplayName
     

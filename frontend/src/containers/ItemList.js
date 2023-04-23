@@ -28,7 +28,10 @@ class ItemList extends React.Component {
   handleAddToWardrobe = id => {
     this.setState({ loading: true });
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe/${id}`, null, {
+      .post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe`,
+        {
+          item_id: id
+        }, {
         headers: {
           'Authorization': `JWT ${localStorage.getItem('access')}`,
         }
