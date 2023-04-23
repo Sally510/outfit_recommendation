@@ -1,0 +1,8 @@
+outfit_recommendation/__pycache__
+recommendation/__pycache__
+recommendation/api/__pycache__
+recommendation/migrations/__pycache__
+recommendation/management/commands/__pycache__
+accounts/__pycache__
+accounts/migrations/__pycache__
+

@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from recommendation.models import Item, OrderItem
@@ -26,6 +26,10 @@ class WardrobeView(RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSericalizer
 
-class AddToWardrobeView(RetrieveAPIView):
+
+class AddToWardrobeView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Item.objects.all()
     serializer_class = ItemSericalizer
+
+
