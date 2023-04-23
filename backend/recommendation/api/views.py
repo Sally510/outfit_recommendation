@@ -18,11 +18,14 @@ class ItemView(RetrieveAPIView):
     permission_classes = (AllowAny,)
     queryset = Item.objects.all()
     serializer_class = ItemSericalizer
+
+class RecommendationView:
+    pass
     
 class WardrobeView(RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSericalizer
 
-class AddWardrobeView(RetrieveAPIView):
+class AddToWardrobeView(RetrieveAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSericalizer

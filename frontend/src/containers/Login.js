@@ -43,7 +43,7 @@ const Login = ({ login, isAuthenticated, error }) => {
     
 
     if (isAuthenticated) {
-        return <Navigate to="/recommendation" />
+        return <Navigate to="/item-list" />
     }
 
     return (

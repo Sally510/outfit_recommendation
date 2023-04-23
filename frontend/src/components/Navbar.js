@@ -24,10 +24,13 @@ const Navbar = ({ logout, isAuthenticated }) => {
       return (
         <Fragment>
           <li>
-            <Link to='/recommendation' className='nav-link px-2 text-white'>开始推荐</Link>
+            <Link to='/item-list' className='nav-link px-2 text-white'>List</Link>
           </li>
           <li>
-            <Link to='/history' className='nav-link px-2 text-white'>历史记录</Link>
+            <Link to='/recommendation' className='nav-link px-2 text-white'>Start Recommendation</Link>
+          </li>
+          <li>
+            <Link to='/wardrobe' className='nav-link px-2 text-white'>Wardrobe</Link>
           </li>
         </Fragment>
       ) 
