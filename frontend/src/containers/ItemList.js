@@ -36,7 +36,7 @@ import axios from "axios";
     }
 
     handleViewItem = id => {
-      //pass the id to the item page
+      
     }
 
     render() {  

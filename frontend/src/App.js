@@ -31,7 +31,7 @@ const App = () => (
           <Route exact path='/activate/:uid/:token' element={<Activate/>} />
           <Route exact path='/recommendation' element={<Recommendation/>} />
           <Route exact path='/item-list' element={<ItemList/>} />
-          <Route exact path='/item-list/:id' element={<Item/>} />
+          <Route exact path='/item' element={<Item/>} />
           <Route exact path='/wardrobe' element={<Wardrobe/>} />
         </Routes>
       </Layout>
