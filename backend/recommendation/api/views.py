@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.core.serializers import serialize
+import recommendation.ml.ml as mm
 
 class ItemListView(ListAPIView):
     permission_classes = (AllowAny,)
@@ -25,7 +26,7 @@ class RecommendationView:
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) 
-def WardrobeView(request):
+def WardrobeEndpoint(request):
     cartItems = CartItem.objects.filter(user_id=request.user.id)
 
     res = []
@@ -37,7 +38,7 @@ def WardrobeView(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def AddToWardrobeView(request):
+def AddToWardrobeEndpoint(request):
     ok = True
     try:
         CartItem.objects.create(item_id=request.data['item_id'], user_id=request.user.id)
@@ -48,7 +49,7 @@ def AddToWardrobeView(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def DeleteToWardrobeView(request):
+def DeleteToWardrobeEndpoint(request):
     try:
         cart_item = CartItem.objects.get(item_id=request.data['item_id'], user_id=request.user.id)
         cart_item.delete()
@@ -58,5 +59,19 @@ def DeleteToWardrobeView(request):
         print(e)  # Log exception
         ok = False
     return Response(ok)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def ProcessRecommendationEndpoint(request):
+    f = request.data['file']
+    name = f.name
+    data = f.read()
+    predicted_item_ids = mm.process_image(name, data)
+    res = []
+    
+    if predicted_item_ids is not None:
+        ids = list(predicted_item_ids)
+        res = list(Item.objects.filter(id__in=ids))
+    return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
 
 
