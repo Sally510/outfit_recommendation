@@ -102,10 +102,10 @@ WSGI_APPLICATION = 'outfit_recommendation.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'recommendations',
+        'NAME': 'recommendation',
         'USER': 'root',
-        'PASSWORD': 'Fduler12$',
-        'HOST': '192.168.1.25',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
