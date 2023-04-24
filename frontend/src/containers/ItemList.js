@@ -26,6 +26,10 @@ class ItemList extends React.Component {
   }
 
   handleAddToWardrobe = id => {
+
+    const dataCopy = [...this.state.data];
+    const newData = dataCopy.filter(item => item.id !== id);
+
     this.setState({ loading: true });
     axios
       .post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe`,
@@ -38,7 +42,7 @@ class ItemList extends React.Component {
       })
       .then(res => {
         console.log(res.data)
-        this.setState({ loading: false });
+        this.setState({ data: newData, loading: false });;
       })
       .catch(err => {
         this.setState({ error: err, loading: false });
@@ -46,8 +50,7 @@ class ItemList extends React.Component {
   }
 
   handleViewItem = id => {
-    console.log(this)
-    return <Navigate to={`/item/${id}`} />
+
   }
 
   render() {
@@ -80,19 +83,13 @@ class ItemList extends React.Component {
                       />
                     </Link>
                     <div className="card-body">
-                      <p className="card-text">{item.productDisplayName}</p>
+                      <p className="card-text" style={{ height: '60px' }}>{item.productDisplayName}</p>
                       <div className="d-flex justify-content-between align-items-center">
-                        <div className="btn-group">
-                          <button type="button"
-                            className="btn btn-sm btn-outline-secondary"
-                            onClick={() => this.handleViewItem(item.id)}
-                          >View Item</button>
-                          <button type="button"
-                            className="btn btn-sm btn-outline-secondary"
-                            onClick={() => this.handleAddToWardrobe(item.id)}
-                          >Add to Wardrobe
-                          </button>
-                        </div>
+                        <button type="button"
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => this.handleAddToWardrobe(item.id)}
+                        >Add to Wardrobe
+                        </button>
                         <small className="text-body-secondary">{item.gender}</small>
                       </div>
                     </div>

@@ -46,3 +46,14 @@ def AddToWardrobeView(request):
     return Response(ok)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def DeleteToWardrobeView(request):
+    try:
+        cart_item = CartItem.objects.get(item_id=request.data['item_id'], user_id=request.user.id)
+        cart_item.delete()
+    except:
+        ok = False
+    return Response(ok)
+
+

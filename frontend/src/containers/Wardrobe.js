@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import axios from "axios";
   class Wardrobe extends React.Component {
@@ -10,9 +10,14 @@ import axios from "axios";
     }
 
     componentDidMount() {
+
       this.setState({ loading: true });
       axios
-        .get(`${process.env.REACT_APP_API_URL}/api/wardrobe/`)
+        .get(`${process.env.REACT_APP_API_URL}/api/wardrobe`, {
+          headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+          }
+        })
         .then(res => {
           console.log(res.data)
           this.setState({ data: res.data, loading: false });
@@ -22,9 +27,29 @@ import axios from "axios";
         });
     }
 
-    
-    handleViewItem = id => {
+
+    handleDeleteToWardrobe = id => {
+
+      const dataCopy = [...this.state.data];
+      const newData = dataCopy.filter(item => item.id !== id);
       
+      this.setState({ loading: true });
+      axios
+      .post(`${process.env.REACT_APP_API_URL}/api/delete-to-wardrobe`,
+        {
+          item_id: id
+        }, {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access')}`,
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        this.setState({ data: newData, loading: false });;
+      })
+      .catch(err => {
+        this.setState({ error: err, loading: false });
+      });
     }
 
 
@@ -49,20 +74,22 @@ import axios from "axios";
               {data.map(item => {
                 return <div key={item.id} className="col" >
                 <div className="card shadow-sm">
-                  <img 
-                    className="card-img-top " 
-                    width="100%" height="400" 
-                    src={item.image}
-                    alt={`${item.productDisplayName}`}
-                  />
+                <Link to={`/item/${item.id}`}>
+                      <img
+                        className="card-img-top "
+                        width="100%" height="400"
+                        src={item.image}
+                        alt={`${item.productDisplayName}`}
+                      />
+                 </Link>
                   <div className="card-body">
-                    <p className="card-text">{item.productDisplayName}</p>
+                    <p className="card-text" style={{ height: '60px' }}>{item.productDisplayName}</p>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
                         <button type="button" 
                                   className="btn btn-sm btn-outline-secondary"
-                                  onClick={()=>this.handleViewItem()}
-                                  >View Item
+                                  onClick={() => this.handleDeleteToWardrobe(item.id)}
+                                  >Delete Item
                           </button>
                         </div>
                         <small className="text-body-secondary">{item.gender}</small>
