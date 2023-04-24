@@ -7,4 +7,5 @@ accounts/__pycache__
 accounts/migrations/__pycache__
 uploads/
 recommendation/ml/__pycache__
+recommendation/ml/data
 
