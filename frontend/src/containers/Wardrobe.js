@@ -32,7 +32,7 @@ import axios from "axios";
 
       const dataCopy = [...this.state.data];
       const newData = dataCopy.filter(item => item.id !== id);
-      
+
       this.setState({ loading: true });
       axios
       .post(`${process.env.REACT_APP_API_URL}/api/delete-to-wardrobe`,
@@ -43,13 +43,9 @@ import axios from "axios";
           'Authorization': `JWT ${localStorage.getItem('access')}`,
         }
       })
-      .then(res => {
-        console.log(res.data)
-        this.setState({ data: newData, loading: false });;
-      })
-      .catch(err => {
-        this.setState({ error: err, loading: false });
-      });
+      .finally(() => {
+        this.setState({ data: newData, loading: false });
+      }); 
     }
 
 

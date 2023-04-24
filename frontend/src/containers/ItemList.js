@@ -42,7 +42,9 @@ class ItemList extends React.Component {
       })
       .then(res => {
         console.log(res.data)
-        this.setState({ data: newData, loading: false });;
+        this.setState({ loading: false });
+        this.setState({ data: newData, loading: false }); 
+
       })
       .catch(err => {
         this.setState({ error: err, loading: false });

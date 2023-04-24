@@ -52,7 +52,10 @@ def DeleteToWardrobeView(request):
     try:
         cart_item = CartItem.objects.get(item_id=request.data['item_id'], user_id=request.user.id)
         cart_item.delete()
-    except:
+    except CartItem.DoesNotExist:
+        ok = False
+    except Exception as e:
+        print(e)  # Log exception
         ok = False
     return Response(ok)
 
