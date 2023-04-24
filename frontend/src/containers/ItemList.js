@@ -2,53 +2,89 @@ import React from "react";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-
+const PAGE_SIZE = 9;
 class ItemList extends React.Component {
 
   state = {
+    page: 0,
+    search: '',
     loading: false,
     error: null,
     data: []
   }
 
+  appendItems = async () => {
+    try {
+      this.setState(() => ({
+        loading: true
+      }));
 
-  componentDidMount() {
-    this.setState({ loading: true });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/item-list/`)
-      .then(res => {
-        console.log(res.data)
-        this.setState({ data: res.data, loading: false });
-      })
-      .catch(err => {
-        this.setState({ error: err, loading: false });
-      });
+      const items = await axios.get(`${process.env.REACT_APP_API_URL}/api/item-list?page_size=${PAGE_SIZE}&page=${this.state.page}&search=${this.state.search}`,
+        {
+          headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+          }
+        });
+      const newData = this.state.data.concat(items.data || []);
+
+      this.setState(prevState => ({
+        data: newData,
+        page: prevState.page + 1
+      }));
+    }
+    catch (err) {
+      console.error(err);
+      this.setState(() => ({
+        error: err
+      }));
+    } finally {
+      this.setState(() => ({
+        loading: false
+      }));
+    }
   }
 
-  handleAddToWardrobe = id => {
+  handleSearch = search => {
 
-    const dataCopy = [...this.state.data];
-    const newData = dataCopy.filter(item => item.id !== id);
+  }
 
-    this.setState({ loading: true });
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe`,
+  componentDidMount() {
+    this.appendItems();
+  }
+
+  handleAddToWardrobe = async item_id => {
+    this.setState(() => ({
+      loading: true
+    }));
+
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe`,
         {
-          item_id: id
+          item_id
         }, {
         headers: {
           'Authorization': `JWT ${localStorage.getItem('access')}`,
         }
-      })
-      .then(res => {
-        console.log(res.data)
-        this.setState({ loading: false });
-        this.setState({ data: newData, loading: false }); 
-
-      })
-      .catch(err => {
-        this.setState({ error: err, loading: false });
       });
+      console.log(response.data);
+      if (response.data.ok) {
+        //remove the item we added to wardrobe.
+        const newData = this.state.data.filter(item => item.id !== item_id);
+        this.setState(() => ({
+          data: newData
+        }));
+      }
+    }
+    catch (err) {
+      console.error(err);
+      this.setState(() => ({
+        error: err
+      }));
+    } finally {
+      this.setState(() => ({
+        loading: false
+      }));
+    }
   }
 
   handleViewItem = id => {
@@ -70,7 +106,7 @@ class ItemList extends React.Component {
                 <div className="spinner-border ml-auto" role="status" aria-hidden="true"></div>
               </div>
             )}
-
+            
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
               {data.map(item => {
@@ -98,8 +134,10 @@ class ItemList extends React.Component {
                   </div>
                 </div>
               })}
+            </div>
 
-
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              <button onClick={() => this.appendItems()}>More</button>
             </div>
           </div>
         </div>

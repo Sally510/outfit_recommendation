@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import(
-    ItemListView,
+    ItemListEndpoint,
     ItemView,
     WardrobeEndpoint,
     AddToWardrobeEndpoint,
@@ -9,7 +9,7 @@ from .views import(
     )
 
 urlpatterns = [
-    path('item-list/', ItemListView.as_view(), name='item-list'),
+    path('item-list', ItemListEndpoint, name='item-list'),
     path('item-list/<int:pk>/', ItemView.as_view(), name='item-list'),
     path('add-to-wardrobe', AddToWardrobeEndpoint, name='add-to-wardrobe'),
     path('delete-to-wardrobe', DeleteToWardrobeEndpoint, name='delete-to-wardrobe'),
