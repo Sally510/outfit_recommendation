@@ -48,11 +48,15 @@ def recommend(features, feature_list):
     neighbors = NearestNeighbors(n_neighbors=7, algorithm="brute", metric="euclidean")
     neighbors.fit(feature_list)
     distance, indices = neighbors.kneighbors([features])
-    print(indices)
-    return indices
+    indices1 = indices[0]
+    filenames = []
+    for i in indices1:
+        filenames.append(filename[i])        
+    print(filenames)
+    return filenames
 
 def process_image(name, image):
     if save_uploaded_file(name, image):
         features = extract_feature(os.path.join(base_path, name), model)
 
-        return recommend(features, feature_list)[0]
+        return recommend(features, feature_list)

@@ -2,7 +2,7 @@ import csv
 from recommendation.models import Item
 from django.core.files import File
 
-with open('C:/Users/64506/Downloads/fashion.csv') as f:
+with open('C:/Users/64506/Downloads/styles.csv') as f:
     reader = csv.reader(f)
     next(reader)  # Skip first line 
     for row in reader:

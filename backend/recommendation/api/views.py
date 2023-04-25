@@ -6,6 +6,7 @@ from recommendation.models import Item, CartItem
 from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
+import re
 
 class ItemView(RetrieveAPIView):
     permission_classes = (AllowAny,)
@@ -67,7 +68,13 @@ def ProcessRecommendationEndpoint(request):
         f = request.data['file']
         name = f.name
         data = f.read()
-        predicted_item_ids = mm.process_image(name, data)
+        predicted_item_paths = mm.process_image(name, data)
+        predicted_item_ids = []
+        for i in predicted_item_paths:
+            id = re.search(r'\d{4,5}', i)
+            print(id)
+            if id:
+                predicted_item_ids.append(int(id.group()))
         res = []
         
         if predicted_item_ids is not None:
