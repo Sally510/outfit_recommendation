@@ -136,8 +136,8 @@ class ItemList extends React.Component {
               })}
             </div>
 
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              <button onClick={() => this.appendItems()}>More</button>
+            <div class="d-grid gap-2 mt-3">
+                <button className='btn btn-dark' onClick={() => this.appendItems()}>More</button>
             </div>
           </div>
         </div>

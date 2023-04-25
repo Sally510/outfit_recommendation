@@ -45,9 +45,10 @@ def extract_feature(img_path, model):
     return normalized
 
 def recommend(features, feature_list):
-    neighbors = NearestNeighbors(n_neighbors=6, algorithm="brute", metric="euclidean")
+    neighbors = NearestNeighbors(n_neighbors=7, algorithm="brute", metric="euclidean")
     neighbors.fit(feature_list)
     distance, indices = neighbors.kneighbors([features])
+    print(indices)
     return indices
 
 def process_image(name, image):

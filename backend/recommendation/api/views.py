@@ -63,15 +63,18 @@ def DeleteToWardrobeEndpoint(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def ProcessRecommendationEndpoint(request):
-    f = request.data['file']
-    name = f.name
-    data = f.read()
-    predicted_item_ids = mm.process_image(name, data)
-    res = []
-    
-    if predicted_item_ids is not None:
-        ids = list(predicted_item_ids)
-        res = list(Item.objects.filter(id__in=ids))
-    return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
+    if 'file' in request.data:
+        f = request.data['file']
+        name = f.name
+        data = f.read()
+        predicted_item_ids = mm.process_image(name, data)
+        res = []
+        
+        if predicted_item_ids is not None:
+            ids = list(predicted_item_ids)
+            res = list(Item.objects.filter(id__in=ids))
+        return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
+    else:
+        return Response('No file submitted', status=400)
 
 

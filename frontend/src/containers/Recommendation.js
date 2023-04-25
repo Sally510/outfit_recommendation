@@ -6,37 +6,47 @@ import axios from "axios";
     state = {
       loading: false,
       error: null,
-      data: []
+      file: null,
+      data: [],
+      
     }
 
     componentDidMount() {
-      this.setState({ loading: true });
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/recommendation/`)
-        .then(res => {
-          console.log(res.data)
-          this.setState({ data: res.data, loading: false });
-        })
-        .catch(err => {
-          this.setState({ error: err, loading: false });
-        });
+
     }
 
-    handleAddToWardrobe = slug => {
-      this.setState({ loading: true });
-      axios
-        .post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe/`, {slug})
-        .then(res => {
-          console.log(res.data)
-          this.setState({loading: false });
+    handleFileSelect = (e) => {
+      if (e.target.files.length > 0) {  
+        this.setState({
+          file: e.target.files[0]
         })
-        .catch(err => {
-          this.setState({ error: err, loading: false });
-        });
     }
+    }
+
+    onSubmit = async e => {
+      e.preventDefault();
+      this.setState({ loading: true });
+      const formData = new FormData();
+      formData.append("file", this.state.file);
+      try {
+        const res = await
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/api/process-recommendation`, formData, {
+            headers: {
+              'Authorization': `JWT ${localStorage.getItem('access')}`,
+            }
+          });
+          this.setState({ data: res.data, loading: false });
+
+        } catch (err) {
+          this.setState({ error: err, loading: false }); 
+        }
+    }
+      
+    
+       
 
     handleViewItem = id => {
-      //pass the id to the item page
     }
 
     render() {  
@@ -50,9 +60,15 @@ import axios from "axios";
               <div className="col-lg-6 col-md-8 mx-auto">
                 <h1 className="fw-light">开始推荐</h1>
                 <p className="lead text-body-secondary">请上传您的图片</p>
-                <div className='mt-2'>
-                  <input className="form-control form-control-lg" id="formFileLg" type="file"/>
-                </div>
+                 
+                  
+                    <form onSubmit={this.onSubmit}>
+                      <input className="form-control form-control-lg" onChange={this.handleFileSelect}   id="id_docfile" type="file" name="docfile" accept="image/*" />
+                      <div class="d-grid gap-2 mt-3">
+                      <button className='btn btn-dark' >Submit</button>
+                      </div>
+                    </form>                 
+                
               </div>
             </div>
           </section>
@@ -107,7 +123,7 @@ import axios from "axios";
         </div>
       );
     }
-  }
+}
 
 
 
