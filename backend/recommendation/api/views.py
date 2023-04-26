@@ -7,6 +7,7 @@ from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
 import re
+from django.shortcuts import redirect
 
 class ItemView(RetrieveAPIView):
     permission_classes = (AllowAny,)

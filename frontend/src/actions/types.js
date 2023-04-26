@@ -23,3 +23,5 @@ export const ADD_SUCCESS = 'ADD_SUCCESS';
 export const ADD_FAIL = 'ADD_FAIL';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAIL = 'DELETE_FAIL';
+export const APPEND_ITEN_SUCESS = 'DELETE_FAIL';
+export const APPEND_ITEN_FAIL = 'DELETE_FAIL';

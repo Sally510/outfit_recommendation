@@ -70,7 +70,7 @@ import axios from "axios";
               {data.map(item => {
                 return <div key={item.id} className="col" >
                 <div className="card shadow-sm">
-                <Link to={`/item/${item.id}`}>
+                <Link to={`/item-list/${item.id}`}>
                       <img
                         className="card-img-top "
                         width="100%" height="400"

@@ -43,7 +43,40 @@ import axios from "axios";
         }
     }
       
-    
+    handleAddToWardrobe = async item_id => {
+      this.setState(() => ({
+        loading: true
+      }));
+  
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/add-to-wardrobe`,
+          {
+            item_id
+          }, {
+          headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+          }
+        });
+        console.log(response.data);
+        if (response.data.ok) {
+          //remove the item we added to wardrobe.
+          const newData = this.state.data.filter(item => item.id !== item_id);
+          this.setState(() => ({
+            data: newData
+          }));
+        }
+      }
+      catch (err) {
+        console.error(err);
+        this.setState(() => ({
+          error: err
+        }));
+      } finally {
+        this.setState(() => ({
+          loading: false
+        }));
+      }
+    }
        
 
     handleViewItem = id => {
@@ -86,34 +119,30 @@ import axios from "axios";
 
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-              {data.map(item => {
+            {data.map(item => {
                 return <div key={item.id} className="col" >
-                <div className="card shadow-sm">
-                  <img 
-                    className="card-img-top " 
-                    width="100%" height="400" 
-                    src={item.image}
-                    alt={`${item.productDisplayName}`}
-                  />
-                  <div className="card-body">
-                    <p className="card-text">{item.productDisplayName}</p>
+                  <div className="card shadow-sm">
+                  <Link to={`/item-list/${item.id}`}>
+                      <img
+                        className="card-img-top "
+                        width="100%" height="400"
+                        src={item.image}
+                        alt={`${item.productDisplayName}`}
+                      />
+                    </Link>
+                    <div className="card-body">
+                      <p className="card-text" style={{ height: '60px' }}>{item.productDisplayName}</p>
                       <div className="d-flex justify-content-between align-items-center">
-                        <div className="btn-group">
-                          <button type="button" 
-                                  className="btn btn-sm btn-outline-secondary"
-                                  onClick={()=>this.handleViewItem(item.id)}
-                                  >View Item</button>
-                          <button type="button" 
-                                  className="btn btn-sm btn-outline-secondary"
-                                  onClick={()=>this.handleAddToWardrobe(item.slug)}
-                                  >Add to Wardrobe
-                          </button>
-                        </div>
+                        <button type="button"
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() => this.handleAddToWardrobe(item.id)}
+                        >Add to Wardrobe
+                        </button>
                         <small className="text-body-secondary">{item.gender}</small>
                       </div>
                     </div>
                   </div>
-                </div>  
+                </div>
               })}
 
            
