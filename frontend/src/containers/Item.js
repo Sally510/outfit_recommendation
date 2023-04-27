@@ -54,34 +54,34 @@ import axios from "axios";
         )}
 
       {data && (
-        <div class="p-5 my-4 bg-light rounded-3 row align-items-center" >
-            <div class="col-md-8">
-              <h1 class="mb-3 display-5 fw-bold">{data.productDisplayName}</h1>
+        <div className="p-5 my-4 bg-light rounded-3 row align-items-center" >
+            <div className="col-md-8">
+              <h1 className="mb-3 display-5 fw-bold">{data.productDisplayName}</h1>
               <div className="fs-4  ms-2 me-5 pe-5 ">
                 <div style={{ height: '70px' }}>
                   <p className="text-muted mb-4">{data.gender}</p>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span class="fw-bold">Master Category</span><span>{data.masterCategory}</span>
+                  <span className="fw-bold">Master Category</span><span>{data.masterCategory}</span>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span class="fw-bold">Sub Category</span><span>{data.subCategory}</span>
+                  <span className="fw-bold">Sub Category</span><span>{data.subCategory}</span>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span class="fw-bold">usage</span><span>{data.usage}</span>
+                  <span className="fw-bold">usage</span><span>{data.usage}</span>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span class="fw-bold">season</span><span>{data.season}</span>
+                  <span className="fw-bold">season</span><span>{data.season}</span>
                 </div>
               </div>
             </div>
             
-            <div class="col-md-4 fs-4">
+            <div className="col-md-4 fs-4">
               <img src={data.image} height="500"
                 className="card-img-top" alt={`${data.productDisplayName}`} />
             </div>
             
-            <div class="d-grid gap-3 mt-5">
+            <div className="d-grid gap-3 mt-5">
                 <button className='btn btn-dark' onClick={() => navigate(-1)}>Return</button>
             </div>
 

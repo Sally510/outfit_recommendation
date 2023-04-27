@@ -11,8 +11,15 @@ import axios from "axios";
       
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
+      localStorage.setItem('data', JSON.stringify(this.state.data)) 
+    }
 
+    componentDidMount() {
+      const data = localStorage.getItem('data')
+      if (data) {
+        this.setState({ data: JSON.parse(data) })
+      } 
     }
 
     handleFileSelect = (e) => {
