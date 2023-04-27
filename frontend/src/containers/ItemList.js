@@ -7,6 +7,7 @@ class ItemList extends React.Component {
 
   state = {
     page: 0,
+    totalCount: 0,
     search: '',
     loading: false,
     error: null,
@@ -29,7 +30,8 @@ class ItemList extends React.Component {
 
       this.setState(prevState => ({
         data: newData,
-        page: prevState.page + 1
+        page: prevState.page + 1,
+        totalCount: items.headers.totalCount
       }));
     }
     catch (err) {
@@ -93,7 +95,7 @@ class ItemList extends React.Component {
 
   render() {
     const { data, error, loading } = this.state;
-
+    console.log("count"+ this.state.totalCount)
     return (
       <div id='container'>
         <div className="album py-5 bg-body-tertiary">
@@ -107,6 +109,56 @@ class ItemList extends React.Component {
               </div>
             )}
             
+            <nav className="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
+                <div className="container-fluid">
+                  <div className="collapse navbar-collapse" id="navbarsExample09">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
+                      <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Season</a>
+                        <ul className="dropdown-menu" >
+                          <li><a className="dropdown-item" href="#">Spring</a></li>
+                          <li><a className="dropdown-item" href="#">Summer</a></li>
+                          <li><a className="dropdown-item" href="#">Fall</a></li>
+                          <li><a className="dropdown-item" href="#">Winter</a></li>
+                        </ul>
+                      </li>
+                      <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Gender</a>
+                        <ul className="dropdown-menu" >
+                          <li><a className="dropdown-item" href="#">Man</a></li>
+                          <li><a className="dropdown-item" href="#">Woman</a></li>
+                          <li><a className="dropdown-item" href="#">Boys</a></li>
+                          <li><a className="dropdown-item" href="#">Girls</a></li>
+                          <li><a className="dropdown-item" href="#">Unisex</a></li>
+                        </ul>
+                      </li>
+                      <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Master Category</a>
+                        <ul className="dropdown-menu" >
+                          <li><a className="dropdown-item" href="#">Accessories</a></li>
+                          <li><a className="dropdown-item" href="#">Appreal</a></li>
+                          <li><a className="dropdown-item" href="#">Footwear</a></li>
+                        </ul>
+                      </li>
+                      <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Usage</a>
+                        <ul className="dropdown-menu" >
+                          <li><a className="dropdown-item" href="#">Casual</a></li>
+                          <li><a className="dropdown-item" href="#">Bussiness</a></li>
+                          <li><a className="dropdown-item" href="#">Sports</a></li>
+                        </ul>
+                      </li>
+
+                    </ul>
+                    <form>
+                      <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+                    </form>
+                  </div>
+                </div>
+              </nav>
+
+             
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
               {data.map(item => {
@@ -136,9 +188,24 @@ class ItemList extends React.Component {
               })}
             </div>
 
-            <div class="d-grid gap-2 mt-3">
+            <div className="d-grid gap-2 mt-3">
                 <button className='btn btn-dark' onClick={() => this.appendItems()}>More</button>
             </div>
+
+            <nav aria-label="Page navigation" className="d-grid gap-2 mt-3">
+              <ul className="pagination justify-content-center">
+                <li className="page-item disabled">
+                  <a className="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                <li className="page-item">
+                  <a className="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+            
           </div>
         </div>
       </div>
