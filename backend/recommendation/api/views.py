@@ -7,7 +7,7 @@ from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
 import re
-from django.shortcuts import redirect
+
 
 class ItemView(RetrieveAPIView):
     permission_classes = (AllowAny,)
@@ -19,12 +19,17 @@ class ItemView(RetrieveAPIView):
 def ItemListEndpoint(request):
     page_size = int(request.query_params['page_size'])
     page = int(request.query_params['page'])
+    search = str(request.query_params['search'])
     offset = page * page_size
-
-    excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id))
-    res = Item.objects.exclude(id__in=excluded_ids)[offset:offset+page_size]
-
-    return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
+    if search is not None:
+        search_items = Item.objects.filter(productDisplayName__istartswith=search)
+        excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id ))
+        res = search_items.exclude(id__in=excluded_ids)[offset:offset+page_size]
+        return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
+    else:    
+        excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id))
+        res = Item.objects.exclude(id__in=excluded_ids)[offset:offset+page_size]
+        return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) 

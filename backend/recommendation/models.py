@@ -12,7 +12,6 @@ class Item(models.Model):
     baseColour = models.CharField(max_length=50)
     season = models.CharField(max_length=20)
     usage = models.CharField(max_length=20)
-    # image = models.ImageField(upload_to='images')
     image = models.CharField(max_length=100, null=True)
     def __str__(self):
         return self.productDisplayName

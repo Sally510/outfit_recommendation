@@ -11,7 +11,11 @@ class ItemList extends React.Component {
     search: '',
     loading: false,
     error: null,
-    data: []
+    data: [],
+    season: '',
+    gender: '',
+    category: '',
+    usage: ''
   }
 
   appendItems = async () => {
@@ -109,50 +113,61 @@ class ItemList extends React.Component {
               </div>
             )}
             
-            <nav className="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light rounded" >
                 <div className="container-fluid">
-                  <div className="collapse navbar-collapse" id="navbarsExample09">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                  <div className="collapse navbar-collapse" >
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
-                      <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Season</a>
-                        <ul className="dropdown-menu" >
-                          <li><a className="dropdown-item" href="#">Spring</a></li>
-                          <li><a className="dropdown-item" href="#">Summer</a></li>
-                          <li><a className="dropdown-item" href="#">Fall</a></li>
-                          <li><a className="dropdown-item" href="#">Winter</a></li>
-                        </ul>
-                      </li>
-                      <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Gender</a>
-                        <ul className="dropdown-menu" >
-                          <li><a className="dropdown-item" href="#">Man</a></li>
-                          <li><a className="dropdown-item" href="#">Woman</a></li>
-                          <li><a className="dropdown-item" href="#">Boys</a></li>
-                          <li><a className="dropdown-item" href="#">Girls</a></li>
-                          <li><a className="dropdown-item" href="#">Unisex</a></li>
-                        </ul>
-                      </li>
-                      <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Master Category</a>
-                        <ul className="dropdown-menu" >
-                          <li><a className="dropdown-item" href="#">Accessories</a></li>
-                          <li><a className="dropdown-item" href="#">Appreal</a></li>
-                          <li><a className="dropdown-item" href="#">Footwear</a></li>
-                        </ul>
-                      </li>
-                      <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Usage</a>
-                        <ul className="dropdown-menu" >
-                          <li><a className="dropdown-item" href="#">Casual</a></li>
-                          <li><a className="dropdown-item" href="#">Bussiness</a></li>
-                          <li><a className="dropdown-item" href="#">Sports</a></li>
-                        </ul>
-                      </li>
+                    <li className="nav-item dropdown">
+                      <button className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Season</button>
+                      <ul className="dropdown-menu" >
+                        <li><button className="dropdown-item" onClick={ () => this.setState({season:"All"}) }>All</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({season:"Summer"}) }>Summer</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({season:"Spring"}) }>Spring</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({season:"Fall"}) }>Fall</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({season:"Winter"}) }>Winter</button></li>
+                      </ul>
+                    </li>
+                    <li className="nav-item dropdown">
+                      <button className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Gender</button>
+                      <ul className="dropdown-menu" >
+                      <li><button className="dropdown-item" onClick={ () => this.setState({gender:"All"}) }>All</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({gender:"Man"}) }>Man</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({gender:"Woman"}) }>Woman</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({gender:"Boys"}) }>Boys</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({gender:"Girls"}) }>Girls</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({gender:"Unisex"}) }>Unisex</button></li>
+                      </ul>
+                    </li>
+                    <li className="nav-item dropdown">
+                      <button className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Master Category</button>
+                      <ul className="dropdown-menu" >
+                        <li><button className="dropdown-item" onClick={ () => this.setState({category:"All"}) }>All</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({category:"Accessories"}) }>Accessories</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({category:"Appreal"}) }>Appreal</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({category:"Footwear"}) }>Footwear</button></li>
+                      </ul>
+                    </li>
+                    <li className="nav-item dropdown">
+                      <button className="nav-link dropdown-toggle" href="#"  data-bs-toggle="dropdown" aria-expanded="false">Usage</button>
+                      <ul className="dropdown-menu" >
+                        <li><button className="dropdown-item" onClick={ () => this.setState({usage:"All"}) }>All</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({usage:"Casual"}) }>Casual</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({usage:"Business"}) }>Business</button></li>
+                        <li><button className="dropdown-item" onClick={ () => this.setState({usage:"Sports"}) }>Sports</button></li>
+                      </ul>
+                    </li>
 
                     </ul>
                     <form>
-                      <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+                      <input className="form-control" type="text" placeholder="Search" aria-label="Search"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            this.setState({ search: e.target.value });
+                            this.handleSearch();  
+                          }
+                        }}
+                      />
                     </form>
                   </div>
                 </div>
