@@ -19,17 +19,28 @@ class ItemView(RetrieveAPIView):
 def ItemListEndpoint(request):
     page_size = int(request.query_params['page_size'])
     page = int(request.query_params['page'])
-    search = str(request.query_params['search'])
     offset = page * page_size
-    if search is not None:
-        search_items = Item.objects.filter(productDisplayName__istartswith=search)
-        excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id ))
-        res = search_items.exclude(id__in=excluded_ids)[offset:offset+page_size]
-        return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
-    else:    
-        excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id))
-        res = Item.objects.exclude(id__in=excluded_ids)[offset:offset+page_size]
-        return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
+    
+    excluded_ids = map(lambda x: x.item_id, CartItem.objects.filter(user_id=request.user.id ))
+    res = Item.objects.exclude(id__in=excluded_ids)
+    
+    if 'search' in request.query_params:
+        res = res.filter(productDisplayName__icontains=str(request.query_params['search']))
+
+    if 'season' in request.query_params:
+        res = res.filter(season=str(request.query_params['season']))
+
+    if 'gender' in request.query_params:
+        res = res.filter(gender=str(request.query_params['gender']))
+
+    if 'category' in request.query_params:
+        res = res.filter(masterCategory=str(request.query_params['category']))
+
+    if 'usage' in request.query_params:
+        res = res.filter(usage=str(request.query_params['usage']))
+
+        
+    return JsonResponse(ItemSericalizer(res[offset:offset+page_size], many=True).data, safe=False)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) 
