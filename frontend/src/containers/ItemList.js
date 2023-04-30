@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 const PAGE_SIZE = 9;
@@ -13,9 +13,10 @@ class ItemList extends React.Component {
     error: null,
     data: [],
     season: '',
-    gender: '',
     category: '',
-    usage: ''
+    gender: '',
+    usage: '',
+    active: false
   }
 
   appendItems = async () => {
@@ -62,10 +63,11 @@ class ItemList extends React.Component {
 
   handleSearch = e => {
     if (e.key === 'Enter') {
-      this.setState(() => ({
+      this.setState((prevState) => ({
         search: e.target.value,
         data: [],
         page: 0,
+        active: !prevState.active 
       }), this.appendItems);
     }
   }
@@ -117,10 +119,6 @@ class ItemList extends React.Component {
     }
   }
 
-  handleViewItem = id => {
-
-  }
-
   render() {
     const { data, error, loading } = this.state;
     console.log("count" + this.state.totalCount)
@@ -142,48 +140,147 @@ class ItemList extends React.Component {
                 <div className="collapse navbar-collapse" >
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
+
                     <li className="nav-item dropdown">
-                      <button className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Season</button>
+                      <button className="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Season</button>                     
                       <ul className="dropdown-menu" >
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ season: "" })}>All</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ season: "Summer" })}>Summer</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ season: "Spring" })}>Spring</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ season: "Fall" })}>Fall</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ season: "Winter" })}>Winter</button></li>
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="season" onClick={() => this.handleDropdownFilterSearch({ season: "" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            All
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="season" onClick={() => this.handleDropdownFilterSearch({ season: "Spring" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            Spring
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="season" onClick={() => this.handleDropdownFilterSearch({ season: "Summer" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Summer
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="season" onClick={() => this.handleDropdownFilterSearch({ season: "Fall" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Fall
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="season" onClick={() => this.handleDropdownFilterSearch({ season: "Winter" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Winter
+                          </label>
+                        </div>                      
                       </ul>
                     </li>
+
                     <li className="nav-item dropdown">
-                      <button className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Gender</button>
+                      <button className="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">gender</button>                     
                       <ul className="dropdown-menu" >
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "" })}>All</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "Man" })}>Man</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "Woman" })}>Woman</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "Boys" })}>Boys</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "Girls" })}>Girls</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ gender: "Unisex" })}>Unisex</button></li>
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            All
+                          </label>
+                        </div>  
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "Men" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            Men
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "Women" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            Women
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "Boys" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Boys
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "Girls" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Girls
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="gender" onClick={() => this.handleDropdownFilterSearch({ gender: "Unisex" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Unisex
+                          </label>
+                        </div>                      
                       </ul>
                     </li>
+
                     <li className="nav-item dropdown">
-                      <button className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Master Category</button>
+                      <button className="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Master Category</button>                     
                       <ul className="dropdown-menu" >
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ category: "" })}>All</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ category: "Accessories" })}>Accessories</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ category: "Appreal" })}>Appreal</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ category: "Footwear" })}>Footwear</button></li>
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="category" onClick={() => this.handleDropdownFilterSearch({ category: "" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            All
+                          </label>
+                        </div>  
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="category" onClick={() => this.handleDropdownFilterSearch({ category: "Accessories" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Accessories
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="category" onClick={() => this.handleDropdownFilterSearch({ category: "Apparel" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Apparel
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="category" onClick={() => this.handleDropdownFilterSearch({ category: "Footwear" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Footwear
+                          </label>
+                        </div>                                          
                       </ul>
                     </li>
+
                     <li className="nav-item dropdown">
-                      <button className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Usage</button>
+                      <button className="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Usage</button>                     
                       <ul className="dropdown-menu" >
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ usage: "" })}>All</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ usage: "Casual" })}>Casual</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ usage: "Business" })}>Business</button></li>
-                        <li><button className="dropdown-item" onClick={() => this.handleDropdownFilterSearch({ usage: "Sports" })}>Sports</button></li>
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="usage" onClick={() => this.handleDropdownFilterSearch({ usage: "" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                            All
+                          </label>
+                        </div>  
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="usage" onClick={() => this.handleDropdownFilterSearch({ usage: "Casual" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Casual
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="usage" onClick={() => this.handleDropdownFilterSearch({ usage: "Formal" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Formal
+                          </label>
+                        </div>                      
+                        <div className="form-check">
+                          <input className="form-check-input" type="radio" name="usage" onClick={() => this.handleDropdownFilterSearch({ usage: "Sports" })} />
+                          <label className="form-check-label" for="flexRadioDefault1">
+                          Sports
+                          </label>
+                        </div>                                          
                       </ul>
                     </li>
 
                   </ul>
-                  <input className="form-control" type="text" placeholder="Search" aria-label="Search"
+                  <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{width:"350px"}}
                     onKeyDown={this.handleSearch}
                   />
                 </div>
@@ -223,20 +320,6 @@ class ItemList extends React.Component {
             <div className="d-grid gap-2 mt-3">
               <button className='btn btn-dark' onClick={() => this.appendItems()}>More</button>
             </div>
-
-            <nav aria-label="Page navigation" className="d-grid gap-2 mt-3">
-              <ul className="pagination justify-content-center">
-                <li className="page-item disabled">
-                  <a className="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item">
-                  <a className="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
 
           </div>
         </div>
