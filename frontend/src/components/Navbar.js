@@ -32,6 +32,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
           <li>
             <Link to='/wardrobe' className='nav-link px-2 text-white'>Wardrobe</Link>
           </li>
+          <li>
+            <Link to='/history' className='nav-link px-2 text-white'>History</Link>
+          </li>
         </Fragment>
       ) 
     }

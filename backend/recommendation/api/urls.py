@@ -5,7 +5,8 @@ from .views import(
     WardrobeEndpoint,
     AddToWardrobeEndpoint,
     DeleteToWardrobeEndpoint,
-    ProcessRecommendationEndpoint
+    ProcessRecommendationEndpoint,
+    HistoryEndpoint
     )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('delete-to-wardrobe', DeleteToWardrobeEndpoint, name='delete-to-wardrobe'),
     path('wardrobe', WardrobeEndpoint, name='wardrobe'),  
     path('process-recommendation', ProcessRecommendationEndpoint, name='process-recommendation'),  
+    path('history', HistoryEndpoint, name='history'),  
 ]

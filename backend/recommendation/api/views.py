@@ -7,6 +7,7 @@ from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
 import re
+import os
 
 
 class ItemView(RetrieveAPIView):
@@ -100,5 +101,15 @@ def ProcessRecommendationEndpoint(request):
         return JsonResponse(ItemSericalizer(res, many=True).data, safe=False)
     else:
         return Response('No file submitted', status=400)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def HistoryEndpoint(request):
+    path = os.path.join(os.getcwd(), 'uploads')
+    img_list = os.listdir(path)
+    img_list = ['http://localhost:8000/uploads/' + i for i in img_list]
+          
+    return Response({'images':img_list})
+
 
 

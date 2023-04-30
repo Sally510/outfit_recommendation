@@ -15,17 +15,6 @@ class Item(models.Model):
     image = models.CharField(max_length=100, null=True)
     def __str__(self):
         return self.productDisplayName
-
-
-    
-class OrderItem(models.Model):
-    user = models.ForeignKey(UserAccount,
-                             on_delete=models.CASCADE)
-    items = models.ManyToManyField(Item)
-    ordered = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.name
     
 class CartItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
