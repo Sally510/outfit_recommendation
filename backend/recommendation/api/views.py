@@ -2,7 +2,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.http import JsonResponse
-from recommendation.models import Item, CartItem
+from recommendation.models import HistoryItem, Item, CartItem
 from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
@@ -85,6 +85,7 @@ def ProcessRecommendationEndpoint(request):
     if 'file' in request.data:
         f = request.data['file']
         name = f.name
+        HistoryItem.objects.create(user_id=request.user.id, upload_image=name)
         data = f.read()
         predicted_item_paths = mm.process_image(name, data)
         predicted_item_ids = []
@@ -105,11 +106,14 @@ def ProcessRecommendationEndpoint(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def HistoryEndpoint(request):
-    path = os.path.join(os.getcwd(), 'uploads')
-    img_list = os.listdir(path)
-    img_list = ['http://localhost:8000/uploads/' + i for i in img_list]
-          
-    return Response({'images':img_list})
+    historyItems = HistoryItem.objects.filter(user_id=request.user.id)   
+    image_list = []
+    for historyItem in historyItems:
+        print(historyItem)
+        image_path = 'http://localhost:8000/uploads/' + historyItem.upload_image
+        image_list.append(image_path)
+    print (image_list)    
+    return Response({'images':image_list})
 
 
 

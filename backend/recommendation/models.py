@@ -25,3 +25,8 @@ class CartItem(models.Model):
     def __str__(self):
         return self.item.product_display_name
     
+class HistoryItem(models.Model):    
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    upload_image = models.CharField(max_length=100, null=True)
+    def __str__(self):
+        return self.user.name
