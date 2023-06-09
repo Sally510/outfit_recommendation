@@ -298,11 +298,11 @@ class ItemList extends React.Component {
                         className="card-img-top "
                         width="100%" height="400"
                         src={item.image}
-                        alt={`${item.productDisplayName}`}
+                        alt={`${item.product_display_name}`}
                       />
                     </Link>
                     <div className="card-body">
-                      <p className="card-text" style={{ height: '60px' }}>{item.productDisplayName}</p>
+                      <p className="card-text" style={{ height: '60px' }}>{item.product_display_name}</p>
                       <div className="d-flex justify-content-between align-items-center">
                         <button type="button"
                           className="btn btn-sm btn-outline-secondary"

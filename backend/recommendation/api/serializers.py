@@ -6,11 +6,11 @@ class ItemSericalizer(serializers.ModelSerializer):
         model = Item
         fields = (
             'id',
-            'productDisplayName',
+            'product_display_name',
             'gender',
-            'masterCategory',
-            'subCategory',
-            'baseColour',
+            'master_category',
+            'sub_category',
+            'base_colour',
             'season',
             'usage',
             'image'

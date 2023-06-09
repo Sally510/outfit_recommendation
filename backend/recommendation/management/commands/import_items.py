@@ -20,12 +20,12 @@ with open('C:/Users/64506/Downloads/styles.csv') as f:
         item = Item.objects.create(
             id=id,
             gender=gender, 
-            masterCategory=master_category,
-            subCategory=sub_category,
-            baseColour=base_colour,
+            master_category=master_category,
+            sub_category=sub_category,
+            base_colour=base_colour,
             season=season,
             usage=usage,
-            productDisplayName=product_display_name,
+            product_display_name=product_display_name,
             image=image
         )
         

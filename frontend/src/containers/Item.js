@@ -56,16 +56,16 @@ import axios from "axios";
         {data && (
           <div className="p-5 my-4 bg-light rounded-3 row align-items-center" >
               <div className="col-md-8">
-                <h1 className="mb-3 display-5 fw-bold">{data.productDisplayName}</h1>
+                <h1 className="mb-3 display-5 fw-bold">{data.product_display_name}</h1>
                 <div className="fs-4  ms-2 me-5 pe-5 ">
                   <div style={{ height: '70px' }}>
                     <p className="text-muted mb-4">{data.gender}</p>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <span className="fw-bold">Master Category</span><span>{data.masterCategory}</span>
+                    <span className="fw-bold">Master Category</span><span>{data.master_category}</span>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <span className="fw-bold">Sub Category</span><span>{data.subCategory}</span>
+                    <span className="fw-bold">Sub Category</span><span>{data.sub_category}</span>
                   </div>
                   <div className="d-flex justify-content-between">
                     <span className="fw-bold">usage</span><span>{data.usage}</span>
@@ -78,7 +78,7 @@ import axios from "axios";
             
             <div className="col-md-4 fs-4">
               <img src={data.image} height="500"
-                className="card-img-top" alt={`${data.productDisplayName}`} />
+                className="card-img-top" alt={`${data.product_display_name}`} />
             </div>
             
             <div className="d-grid gap-3 mt-5">

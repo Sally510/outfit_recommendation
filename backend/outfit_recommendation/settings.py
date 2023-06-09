@@ -188,6 +188,8 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,
 }
 
+DOMAIN = 'localhost:3000'
+
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
