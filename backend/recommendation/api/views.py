@@ -26,7 +26,7 @@ def ItemListEndpoint(request):
     res = Item.objects.exclude(id__in=excluded_ids)
     
     if 'search' in request.query_params:
-        res = res.filter(productDisplayName__icontains=str(request.query_params['search']))
+        res = res.filter(product_display_name__icontains=str(request.query_params['search']))
 
     if 'season' in request.query_params:
         res = res.filter(season=str(request.query_params['season']))
@@ -35,7 +35,7 @@ def ItemListEndpoint(request):
         res = res.filter(gender=str(request.query_params['gender']))
 
     if 'category' in request.query_params:
-        res = res.filter(masterCategory=str(request.query_params['category']))
+        res = res.filter(master_category=str(request.query_params['category']))
 
     if 'usage' in request.query_params:
         res = res.filter(usage=str(request.query_params['usage']))
