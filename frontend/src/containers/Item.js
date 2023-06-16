@@ -12,16 +12,13 @@ import Message from "../components/Message";
 
     const { itemId } = useParams();
 
-    const navigate = useNavigate();
-
     const [Item, setItem] = useState({
       loading: false,
       error: null,
       data: [],
-      reviews: []
     });
     
-    const { loading, error, data, review } = Item
+    const { loading, error, data } = Item
 
     const fetchItem = async () => {
       setItem({ loading: true })
@@ -46,27 +43,27 @@ import Message from "../components/Message";
       }
     };
 
-    const fetchReview = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${localStorage.getItem("access")}`,
-          Accept: "application/json",
-        },
-      };
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews`, config);
-        setItem({
-          reviews: res.data,
-          // loading: false
-        })
-      } catch (err) {
-        setItem({
-          error: err,
-          // loading: false
-        })
-      }
-    };
+    // const fetchReview = async () => {
+    //   const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `JWT ${localStorage.getItem("access")}`,
+    //       Accept: "application/json",
+    //     },
+    //   };
+    //   try {
+    //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews`, config);
+    //     setItem({
+    //       reviews: res.data,
+    //       // loading: false
+    //     })
+    //   } catch (err) {
+    //     setItem({
+    //       error: err,
+    //       // loading: false
+    //     })
+    //   }
+    // };
 
     useEffect(() => {
       setItem({ loading: true })
@@ -95,13 +92,13 @@ import Message from "../components/Message";
                   style={{ height: "70px", justifyContent: "space-between" }}
                 >
                   <span className="text-muted">{data.gender}</span>
-                  {/* <span className="ml-2">
+                  <span className="ml-2">
                     <Rating
-                      value={review.rating}
-                      text={`${review.numReviews} reviews`}
+                      value={data.rating}
+                      text={`${data.numReviews} reviews`}
                       color={"#f8e825"}
                     />
-                  </span> */}
+                  </span>
                 </div>
                 <div className="d-flex justify-content-between">
                   <span className="fw-bold">Master Category</span>

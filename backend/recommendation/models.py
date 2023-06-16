@@ -13,6 +13,8 @@ class Item(models.Model):
     season = models.CharField(max_length=20)
     usage = models.CharField(max_length=20)
     image = models.CharField(max_length=100, null=True)
+    rating = models.DecimalField(max_digits=12,decimal_places=2,null=True,blank=True)
+    numReviews = models.IntegerField(null=True,blank=True,default=0)
     def __str__(self):
         return self.product_display_name
     

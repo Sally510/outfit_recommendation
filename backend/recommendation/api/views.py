@@ -122,14 +122,10 @@ def HistoryEndpoint(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createProductReview(request, pk):
-    print("request.user.id: " + str(request.user.id) )
     user = UserAccount.objects.filter(id=request.user.id).first() 
-    print(user)
-    print(user.name)
     product = Item.objects.get(id=pk)
-    print(product)
     data = request.data
-    print(data)
+    
     # 1 Review already exists
     alreadyExists = product.review_set.filter(user_id = request.user.id).exists()
 
