@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import(
     ItemListEndpoint,
-    ItemView,
+    ItemEndpoint,
     WardrobeEndpoint,
     AddToWardrobeEndpoint,
     DeleteToWardrobeEndpoint,
@@ -12,9 +12,9 @@ from .views import(
 
 urlpatterns = [
     path('item-list', ItemListEndpoint, name='item-list'),
-    path('item-list/<str:pk>/', ItemView.as_view(), name='item'),
+    path('item-list/<str:pk>/', ItemEndpoint, name='item'),
 
-    path('item-list/<str:pk>/reviews', createProductReview, name='ProductReview'),
+    path('item-list/<str:pk>/reviews/', createProductReview, name='ProductReview'),
 
     path('add-to-wardrobe', AddToWardrobeEndpoint, name='add-to-wardrobe'),
     path('delete-to-wardrobe', DeleteToWardrobeEndpoint, name='delete-to-wardrobe'),

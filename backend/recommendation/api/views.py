@@ -12,11 +12,11 @@ import recommendation.ml.ml as mm
 import re
 import os
 
-
-class ItemView(RetrieveAPIView):
-    permission_classes = (AllowAny,)
-    queryset = Item.objects.all()
-    serializer_class = ItemSericalizer
+@api_view(['GET'])
+def ItemEndpoint(request, pk):
+    product = Item.objects.get(id=pk)
+    serializer = ItemSericalizer(product, many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) 

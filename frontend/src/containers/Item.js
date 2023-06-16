@@ -3,17 +3,6 @@ import {Link, useNavigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux'
 import axios from "axios";
 
-/* REACT BOOTSTRAP */
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Button,
-  Card,
-  Form,
-} from "react-bootstrap";
-
 /* COMPONENTS */
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
