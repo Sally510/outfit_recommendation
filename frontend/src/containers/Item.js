@@ -20,6 +20,10 @@ import Message from "../components/Message";
     
     const { loading, error, data } = Item
 
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
+    const [message, setMessage] = useState("");
+
     const fetchItem = async () => {
       setItem({ loading: true })
       const config = {
@@ -35,6 +39,7 @@ import Message from "../components/Message";
           data: res.data,
           loading: false
         })
+        console.log(data.reviews)
       } catch (err) {
         setItem({
           error: err,
@@ -43,27 +48,32 @@ import Message from "../components/Message";
       }
     };
 
-    // const fetchReview = async () => {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `JWT ${localStorage.getItem("access")}`,
-    //       Accept: "application/json",
-    //     },
-    //   };
-    //   try {
-    //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews`, config);
-    //     setItem({
-    //       reviews: res.data,
-    //       // loading: false
-    //     })
-    //   } catch (err) {
-    //     setItem({
-    //       error: err,
-    //       // loading: false
-    //     })
-    //   }
-    // };
+    const createProductReview = async (itemId, review) => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("access")}`,
+          Accept: "application/json",
+        },
+      };
+      // const body = JSON.stringify({ rating, comment });
+      try {
+        console.log("createProductReview")
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews/`, review, config);
+        setMessage(res.data)
+      } catch (err) {
+        console.log("createProductReviewErr")
+        setMessage(err)
+      }
+      console.log(message)
+    };
+
+
+
+    const submitHandler = (e) => {
+      // e.preventDefault();
+      createProductReview(itemId, { rating, comment });
+    };
 
     useEffect(() => {
       setItem({ loading: true })
@@ -128,43 +138,44 @@ import Message from "../components/Message";
               />
             </div>
 
-            <div className="d-grid gap-3 mt-5">
-              <h4 class="mt-3">Reviews</h4>
-              <div class="list-group-item">
-                <strong>Sally</strong>
-                <div class="rating">
-                  <span>
-                    <i class="fas fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fas fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="fas fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="far fa-star"></i>
-                  </span>
-                  <span>
-                    <i class="far fa-star"></i>
-                  </span>
-                  <span></span>
+            {data.reviews && (
+              <div className="d-grid gap-3 mt-5">
+                <h4 className="mt-3">Reviews</h4>
+                {data.reviews.length === 0 && (
+                  <Message variant="info">No Reviews</Message>
+                )}
+
+                <div>
+                  {data.reviews.map((review) => (
+                    <div key={review._id}>
+                      <strong>{review.name}</strong>
+
+                      <Rating value={review.rating} color="f8e825" />
+
+                      <p>{review.createdAt.substring(0, 10)}</p>
+
+                      <p>{review.comment}</p>
+                    </div>
+                  ))}
                 </div>
-                <p>2023-06-16</p>
-                <p>
-                  goddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                </p>
               </div>
-            </div>
+            )}
+
             <hr></hr>
-            <div className="d-grid gap-3 mt-5">
+
+            <div className="d-grid gap-3 mt-3">
               <h4>Write a Review</h4>
-              <form className="">
+              <form onSubmit={submitHandler}>
                 <div className="form-group">
                   <label className="form-label" for="rating">
                     Rating
                   </label>
-                  <select id="rating" className="form-control">
+                  <select
+                    id="rating"
+                    className="form-control"
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                  >
                     <option value="">Select...</option>
                     <option value="1">1 - Poor</option>
                     <option value="2">2 - Fair</option>
@@ -182,9 +193,12 @@ import Message from "../components/Message";
                     id="comment"
                     className="form-control"
                     spellcheck="false"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                   ></textarea>
                 </div>
-                <button type="submit" className="my-3 btn btn-primary">
+                <button type="submit" className="my-3 btn btn-primary"
+                >
                   Submit
                 </button>
               </form>
