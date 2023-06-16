@@ -1,8 +1,11 @@
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework import status
+
 from django.http import JsonResponse
-from recommendation.models import HistoryItem, Item, CartItem
+from recommendation.models import HistoryItem, Item, CartItem, Review
+from accounts.models import UserAccount
 from .serializers import ItemSericalizer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
@@ -116,4 +119,47 @@ def HistoryEndpoint(request):
     return Response({'images':image_list})
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createProductReview(request, pk):
+    print("request.user.id: " + str(request.user.id) )
+    user = UserAccount.objects.filter(id=request.user.id).first() 
+    print(user)
+    print(user.name)
+    product = Item.objects.get(id=pk)
+    print(product)
+    data = request.data
+    print(data)
+    # 1 Review already exists
+    alreadyExists = product.review_set.filter(user_id = request.user.id).exists()
 
+    if alreadyExists:
+        content = {'detail': 'Product already reviewed'}
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    # 2 No Rating or 0
+    elif data['rating'] == 0:
+        content = {'detail': 'Please Select a rating'}
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    # 3 Create review
+    else:
+        review = Review.objects.create(
+            user=user,
+            product=product,
+            name=user.name,
+            rating=data['rating'],
+            comment=data['comment'],
+        )
+
+        reviews = product.review_set.all()
+        product.numReviews = len(reviews)
+
+        total = 0
+
+        for i in reviews:
+            total += i.rating
+        product.rating = total / len(reviews)
+        product.save()
+
+        return Response('Review Added')

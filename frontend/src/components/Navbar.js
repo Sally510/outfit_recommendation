@@ -13,7 +13,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
 
   const authLogout = () => (
     <Fragment>
-      <a href='#!' onClick={logout} className="btn btn-warning">注销</a>
+      <a href='/' onClick={logout} className="btn btn-warning">注销</a>
     </Fragment>
 
   );
