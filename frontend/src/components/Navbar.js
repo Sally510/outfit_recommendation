@@ -20,7 +20,6 @@ const Navbar = ({ logout, isAuthenticated }) => {
 
   const authLinks = () => {
     if (isAuthenticated) {
-      console.log('Rendering auth links!')
       return (
         <Fragment>
           <li>

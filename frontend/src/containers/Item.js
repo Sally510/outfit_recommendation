@@ -22,7 +22,8 @@ import Message from "../components/Message";
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
-    const [message, setMessage] = useState("");
+    const [reviewMessage, setReviewMessage] = useState(null);
+    const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
     const fetchItem = async () => {
       setItem({ loading: true })
@@ -39,7 +40,6 @@ import Message from "../components/Message";
           data: res.data,
           loading: false
         })
-        console.log(data.reviews)
       } catch (err) {
         setItem({
           error: err,
@@ -56,27 +56,32 @@ import Message from "../components/Message";
           Accept: "application/json",
         },
       };
-      // const body = JSON.stringify({ rating, comment });
       try {
-        console.log("createProductReview")
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews/`, review, config);
-        setMessage(res.data)
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/item-list/${itemId}/reviews/`, review, config);
+        setReviewSubmitted(true);
+        window.location.reload(); 
       } catch (err) {
-        console.log("createProductReviewErr")
-        setMessage(err)
+        console.log(err.response.data)
+        if (err.response.data.detail === "Product already reviewed") {
+          setReviewMessage("You have already reviewed this product."); 
+        } else if (err.response.data.detail === "Please Select a rating") {
+          setReviewMessage("Please Select a rating.");
+        }
+        setReviewSubmitted(false)
       }
-      console.log(message)
     };
-
-
 
     const submitHandler = (e) => {
-      // e.preventDefault();
+      e.preventDefault();
       createProductReview(itemId, { rating, comment });
-    };
+      // setReviewSubmitted(true);    
+    } 
 
     useEffect(() => {
-      setItem({ loading: true })
+      if (reviewSubmitted) {
+        setRating(0);
+        setComment("");
+      }
       fetchItem();
     }, []);
 
@@ -149,11 +154,8 @@ import Message from "../components/Message";
                   {data.reviews.map((review) => (
                     <div key={review._id}>
                       <strong>{review.name}</strong>
-
                       <Rating value={review.rating} color="f8e825" />
-
                       <p>{review.createdAt.substring(0, 10)}</p>
-
                       <p>{review.comment}</p>
                     </div>
                   ))}
@@ -165,9 +167,15 @@ import Message from "../components/Message";
 
             <div className="d-grid gap-3 mt-3">
               <h4>Write a Review</h4>
+              { reviewSubmitted && (
+                <Message variant="success">Review Submitted</Message>
+              )}
+              {reviewMessage && (
+                <Message variant="danger">{reviewMessage}</Message>
+              )}
               <form onSubmit={submitHandler}>
                 <div className="form-group">
-                  <label className="form-label" for="rating">
+                  <label className="form-label" >
                     Rating
                   </label>
                   <select
@@ -185,20 +193,18 @@ import Message from "../components/Message";
                   </select>
                 </div>
                 <div className="form-group">
-                  <label className="form-label" for="comment">
+                  <label className="form-label">
                     Review
                   </label>
                   <textarea
                     row="5"
                     id="comment"
                     className="form-control"
-                    spellcheck="false"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   ></textarea>
                 </div>
-                <button type="submit" className="my-3 btn btn-primary"
-                >
+                <button type="submit" className="my-3 btn btn-dark">
                   Submit
                 </button>
               </form>

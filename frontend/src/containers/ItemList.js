@@ -50,7 +50,6 @@ class ItemList extends React.Component {
       }));
     }
     catch (err) {
-      console.error(err);
       this.setState(() => ({
         error: err
       }));
@@ -98,7 +97,6 @@ class ItemList extends React.Component {
           'Authorization': `JWT ${localStorage.getItem('access')}`,
         }
       });
-      console.log(response.data);
       if (response.data.ok) {
         //remove the item we added to wardrobe.
         const newData = this.state.data.filter(item => item.id !== item_id);
@@ -108,7 +106,6 @@ class ItemList extends React.Component {
       }
     }
     catch (err) {
-      console.error(err);
       this.setState(() => ({
         error: err
       }));
@@ -121,7 +118,6 @@ class ItemList extends React.Component {
 
   render() {
     const { data, error, loading } = this.state;
-    console.log("count" + this.state.totalCount)
     return (
       <div id='container'>
         <div className="album py-5 bg-body-tertiary">
