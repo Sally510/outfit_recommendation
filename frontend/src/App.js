@@ -12,6 +12,7 @@ import ItemList from "./containers/ItemList";
 import Item from "./containers/Item";
 import Wardrobe from "./containers/Wardrobe";
 import History from "./containers/History";
+import Profile from "./containers/Profile";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -35,6 +36,7 @@ const App = () => (
           <Route exact path='/item-list/:itemId' element={<Item/>} />
           <Route exact path='/wardrobe' element={<Wardrobe/>} />
           <Route exact path='/history' element={<History/>} />
+          <Route exact path='/profile' element={<Profile/>} />
         </Routes>
       </Layout>
     </Router>

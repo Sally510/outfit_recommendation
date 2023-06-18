@@ -22,7 +22,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
         {localStorage.getItem('email')}
       </button>
       <ul className="dropdown-menu">
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="/profile">
           Profile
         </a>
         <a class="dropdown-item" onClick={logout} href="/">

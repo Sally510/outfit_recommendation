@@ -1,4 +1,3 @@
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,7 +5,7 @@ from rest_framework import status
 from django.http import JsonResponse
 from recommendation.models import HistoryItem, Item, CartItem, Review
 from accounts.models import UserAccount
-from .serializers import ItemSericalizer
+from .serializers import ItemSericalizer, ReviewSerializer
 from rest_framework.decorators import api_view, permission_classes
 import recommendation.ml.ml as mm
 import re
@@ -159,3 +158,16 @@ def createProductReview(request, pk):
         product.save()
 
         return Response('Review Added')
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getReviews(request):
+    reviews = Review.objects.filter(user_id=request.user.id)
+    return JsonResponse(ReviewSerializer(reviews, many=True).data, safe=False)
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def deleteReview(request):
+#     reviews = Review.objects.filter(user_id=request.user.id)
+#     return JsonResponse(ReviewSerializer(reviews, many=True).data, safe=False)
