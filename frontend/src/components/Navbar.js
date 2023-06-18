@@ -6,14 +6,29 @@ import { logout } from "../actions/auth";
 const Navbar = ({ logout, isAuthenticated }) => {
   const guestLinks = () => (
     <Fragment>
-      <Link to='/login' role="button" className="btn btn-outline-light me-2">登录</Link>
-      <Link to='/register' role="button" className="btn btn-warning">注册</Link>
+      <Link to='/login' role="button" className="btn btn-outline-light me-2">Login</Link>
+      <Link to='/register' role="button" className="btn btn-warning">Register</Link>
     </Fragment>
   );
 
   const authLogout = () => (
     <Fragment>
-      <a href='/' onClick={logout} className="btn btn-warning">注销</a>
+      <button
+        className="nav-link dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {localStorage.getItem('email')}
+      </button>
+      <ul className="dropdown-menu">
+        <a class="dropdown-item" href="#">
+          Profile
+        </a>
+        <a class="dropdown-item" onClick={logout} href="/">
+          Logout
+        </a>
+      </ul>
     </Fragment>
   );
 
