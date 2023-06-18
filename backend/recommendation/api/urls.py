@@ -8,7 +8,8 @@ from .views import(
     ProcessRecommendationEndpoint,
     HistoryEndpoint,
     createProductReview,
-    getReviews
+    getReviews,
+    deleteReview
     )
 
 urlpatterns = [
@@ -21,5 +22,6 @@ urlpatterns = [
     path('process-recommendation', ProcessRecommendationEndpoint, name='process-recommendation'),  
     path('history', HistoryEndpoint, name='history'),  
     path('reviews', getReviews, name='getReviews'),
+    path('reviews/delete', deleteReview, name='deleteReview'),
 
 ]

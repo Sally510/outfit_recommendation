@@ -143,6 +143,7 @@ def createProductReview(request, pk):
             user=user,
             product=product,
             name=user.name,
+            product_name = product.product_display_name,
             rating=data['rating'],
             comment=data['comment'],
         )
@@ -166,8 +167,16 @@ def getReviews(request):
     reviews = Review.objects.filter(user_id=request.user.id)
     return JsonResponse(ReviewSerializer(reviews, many=True).data, safe=False)
 
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def deleteReview(request):
-#     reviews = Review.objects.filter(user_id=request.user.id)
-#     return JsonResponse(ReviewSerializer(reviews, many=True).data, safe=False)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated]) 
+def deleteReview(request):
+    try:
+        review = Review.objects.get(product=request.data['id'], user=request.user.id)
+        review.delete()
+        ok = True
+    except Review.DoesNotExist:
+        ok = False 
+    except Exception as e:
+        print(e)  # Log exception
+        ok = False
+    return Response(ok)

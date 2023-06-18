@@ -25,6 +25,8 @@ import Message from "../components/Message";
     const [reviewMessage, setReviewMessage] = useState(null);
     const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+    const navigate = useNavigate();
+
     const fetchItem = async () => {
       setItem({ loading: true })
       const config = {
@@ -89,9 +91,10 @@ import Message from "../components/Message";
 
     return (
       <div className="container py-5">
-        <Link to="/item-list" className="btn btn-light my-3">
+        <button onClick={() => navigate(-1)} className="btn btn-light my-3">
           Go Back
-        </Link>
+        </button>
+        
         {error && <Message variant="danger">{error}</Message>}
         {loading && <Loader />}
 

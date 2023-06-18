@@ -38,11 +38,11 @@ const Register = ({ register, isAuthenticated, error }) => {
 
             <form onSubmit={e => onSubmit(e)}>
                 <div class="mb-3">
-                    <label for="name" class="form-label">用户名</label>
+                    <label for="name" class="form-label">Name</label>
                     <input
                         className='form-control'
                         type='text'
-                        placeholder='用户名'
+                        placeholder='Name'
                         name='name'
                         value={name}
                         onChange={e => onChange(e)}
@@ -50,11 +50,11 @@ const Register = ({ register, isAuthenticated, error }) => {
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">邮箱</label>
+                    <label for="email" class="form-label">Email</label>
                     <input
                         className='form-control'
                         type='email'
-                        placeholder='邮箱'
+                        placeholder='Email'
                         name='email'
                         value={email}
                         onChange={e => onChange(e)}
@@ -63,11 +63,11 @@ const Register = ({ register, isAuthenticated, error }) => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">密码</label>
+                    <label for="password" class="form-label">Password</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='密码'
+                        placeholder='Password'
                         name='password'
                         value={password}
                         onChange={e => onChange(e)}
@@ -76,11 +76,11 @@ const Register = ({ register, isAuthenticated, error }) => {
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">确认密码</label>
+                    <label for="password" class="form-label">Confirm Password</label>
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='确认密码'
+                        placeholder='Confirm Password'
                         name='re_password'
                         value={re_password}
                         onChange={e => onChange(e)}
@@ -90,7 +90,7 @@ const Register = ({ register, isAuthenticated, error }) => {
                 </div>
 
                 <div class="d-grid gap-2 my-3">
-                    <button class="btn btn-dark" type="submit">注册</button>
+                    <button class="btn btn-dark" type="submit">Register</button>
                 </div>
 
                 {error && ( <pre className="alert alert-danger mt-3" role="alert">{error}</pre>)}

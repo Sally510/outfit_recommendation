@@ -26,8 +26,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
           Profile
         </a>
         <a class="dropdown-item" onClick={logout} href="/">
-          Logout
+          Logout <i class="fa-solid fa-right-from-bracket"></i>
         </a>
+
       </ul>
     </Fragment>
   );
@@ -61,7 +62,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
           </a>
 
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><Link to="/" className="nav-link px-2 text-secondary">主页</Link></li>
+            <li><Link to="/" className="nav-link px-2 text-secondary">Home</Link></li>
             {authLinks() } 
           </ul>
 

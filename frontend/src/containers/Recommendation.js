@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import axios from "axios";
+import Loader from "../components/Loader";
+
   class Recommendation extends React.Component {
     state = {
       loading: false,
@@ -97,8 +98,8 @@ import axios from "axios";
           <section className="pt-5 pb-2 text-center container">
             <div className="row py-lg-5">
               <div className="col-lg-6 col-md-8 mx-auto">
-                <h1 className="fw-light">开始推荐</h1>
-                <p className="lead text-body-secondary">请上传您的图片</p>
+                <h1 className="fw-light">Start Recommendation</h1>
+                <p className="lead text-body-secondary">Please upload your picture</p>
 
                 <form onSubmit={this.onSubmit}>
                   <input
@@ -125,16 +126,7 @@ import axios from "axios";
                 </div>
               )}
 
-              {loading && (
-                <div className="d-flex justify-content-center align-items-center w-100">
-                  <strong>正在加载...</strong>
-                  <div
-                    className="spinner-border ml-auto"
-                    role="status"
-                    aria-hidden="true"
-                  ></div>
-                </div>
-              )}
+              {loading && <Loader />}
 
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {data.map((item) => {
